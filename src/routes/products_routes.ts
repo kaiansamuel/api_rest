@@ -1,20 +1,12 @@
 import { Router } from 'express'
 import { myMiddleware } from '../middlewares/my_middleware'
+import { ProductsController } from '../controllers/ProductController'
 
 export const productsRoutes = Router()
-
+const productsController = new ProductsController()
 
 //Parametros não nomeados
 //Middleware local em uma rota especifica
-productsRoutes.get("/", myMiddleware,(request, response) =>{
-  const { page, limit } = request.query
+productsRoutes.get("/", productsController.index)
 
-  response.send(`Página ${page} de ${limit}`)
-})
-
-productsRoutes.post("/", (request, response) => {
-  const { name, price } = request.body
-
-  //response.end(`Produto ${name} custa $ ${price}`)
-  response.status(201).json({ name, price, user_id: request.user_id})
-})
+productsRoutes.post("/", myMiddleware, productsController.create)
