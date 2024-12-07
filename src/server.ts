@@ -1,9 +1,13 @@
 import express from "express"
+import { myMiddleware } from './middlewares/my_middleware'
 
 const PORT = 3333
 
 const app = express()
-app.use(express.json())   
+app.use(express.json())  
+
+//middleware glogal (aplica para todos abaixo dele)
+//app.use(myMiddleware)
 
 app.get("/", (request, response) => {
   response.end("Hello World Express")
@@ -17,7 +21,8 @@ app.get("/", (request, response) => {
 //})
 
 //Parametros não nomeados
-app.get("/products", (request, response) =>{
+//Middleware local em uma rota especifica
+app.get("/products", myMiddleware,(request, response) =>{
   const { page, limit } = request.query
 
   response.send(`Página ${page} de ${limit}`)
