@@ -10,10 +10,6 @@ app.use(routes)
 //middleware glogal (aplica para todos abaixo dele)
 //app.use(myMiddleware)
 
-app.get("/", (request, response) => {
-  response.end("Hello World Express")
-})
-
 //Route params
 //app.get("/products/:id", (request, response) => {
 //  const { id } = request.params
